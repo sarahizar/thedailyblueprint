@@ -1,29 +1,28 @@
-var openPrompt = prompt("You are kind, you are smart, you are funny, you are IMPORTANT.")
 
-var localeSettings = {};
-dayjs.locale(localeSettings);
+var localeStorage = {};
+dayjs.locale(localeStorage);
 
 //Users current time
 $(function () {
   var currentHour = dayjs().format('H');
-// The function below changes the color of each time block based on whether it's in the "past, present, or future depending on the current time.
+// This function changes the color of each time block based on whether it's in the past, present, or future depending on the current time.
   function hoursColor() {
     $('.time-block').each(function() {
-      var blockHour = parseInt(this.id);
-      $(this).toggleClass('past', blockHour < currentHour);
-      $(this).toggleClass('present', blockHour === currentHour);
-      $(this).toggleClass('future', blockHour > currentHour);
+      var blocksHour = parseInt(this.id);
+      $(this).toggleClass('past', blocksHour < currentHour);
+      $(this).toggleClass('present', blocksHour === currentHour);
+      $(this).toggleClass('future', blocksHour > currentHour);
     });
   }
-// The  function below will save the user's input in a textarea to localStorage - only when the corresponding save button has been clicked.
+// The  function below will save the user's input in a textarea to localStorage - only when the save button followed by te refresh button.
   function usersInput() {
     $('.saveBtn').on('click', function() {
-      var key = $(this).parent().attr('id');
+      var keyinput = $(this).parent().attr('id');
       var value = $(this).siblings('.description').val();
-      localStorage.setItem(key, value);
+      localStorage.setItem(keyinput, value);
     });
   }
- // The function below will refresh the color of each time block based on whether it's in the past, present, or future(green) relative to the current time. 
+ // The function below will refresh the color of each time block based on whether it's in the past (grey), present(yellow), or future(green) relative to the current time. 
   function changeColor() {
     $('.time-block').each(function() {
       var blockHour = parseInt(this.id);
@@ -38,8 +37,8 @@ $(function () {
   }
   // This will get the user input from the localStorage and set textarea values for each time block.
   $('.time-block').each(function() {
-    var key = $(this).attr('id');
-    var value = localStorage.getItem(key);
+    var keyinput = $(this).attr('id');
+    var value = localStorage.getItem(keyinput);
     $(this).children('.description').val(value);
   });
 
